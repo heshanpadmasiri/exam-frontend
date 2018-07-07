@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {UserServicesService} from '../services/user-services.service';
 import {ModuleService} from '../services/module.service';
 import {FlashMessagesService} from 'angular2-flash-messages';
+import {ValidateService} from '../services/validate.service';
 
 
 @Component({
@@ -19,7 +20,8 @@ export class EnterResultsComponent implements OnInit {
 
   constructor(private userService: UserServicesService,
               private moduleService: ModuleService,
-              private flashMessageService: FlashMessagesService) {
+              private flashMessageService: FlashMessagesService,
+              private validationService: ValidateService) {
   }
 
   ngOnInit() {
@@ -75,25 +77,40 @@ export class EnterResultsComponent implements OnInit {
 
   pushResult() {
     const finalResult = [];
-
+    let lock = true;
     for (let index = 0; index < this.registeredStudents.length; index++) {
-      finalResult.push({
-        [this.registeredStudents[index]]: this.currentResult[index][this.registeredStudents[index]]
-      });
-    }
-    this.moduleService.updateResults(this.currentModule, finalResult).subscribe(next => {
-      if (next.success) {
-        this.flashMessageService.show('Result update successful', {
-          cssClass: 'alert-success',
-          timeOut: 5000
+      const result = this.currentResult[index][this.registeredStudents[index]].toUpperCase();
+      console.log(result);
+      console.log(this.validationService.validateResults(result));
+      if (this.validationService.validateResults(result)) {
+        finalResult.push({
+          [this.registeredStudents[index]]: result
         });
       } else {
-        this.flashMessageService.show(next.msg, {
-          cssClass: 'alert-danger',
-          timeOut: 5000
-        });
+        lock = false;
       }
-    });
+    }
+    if(lock){
+      this.moduleService.updateResults(this.currentModule, finalResult).subscribe(next => {
+        if (next.success) {
+          this.flashMessageService.show('Result update successful', {
+            cssClass: 'alert-success',
+            timeOut: 5000
+          });
+        } else {
+          this.flashMessageService.show(next.msg, {
+            cssClass: 'alert-danger',
+            timeOut: 5000
+          });
+        }
+      });
+    } else {
+      this.flashMessageService.show('Results invalid', {
+        cssClass: 'alert-danger',
+        timeOut: 5000
+      });
+    }
+
   }
 }
 

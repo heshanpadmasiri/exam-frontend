@@ -32,4 +32,10 @@ export class ValidateService {
     return re.test(moduleCode);
   }
 
+  // use this to validate pattern for results
+  validateResults(result: string){
+    const re = /[A,B,C,D]\+?|IWE/;
+    return re.test(result);
+  }
+
 }

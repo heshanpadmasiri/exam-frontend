@@ -5,12 +5,12 @@
         <div class="col-md-12 ">
           <div class="card">
             <div class="card-header" data-background-color="red">
-                                    
+
             <p>Upload File</p>
             </div>
            <div class="card-content">
               <div class="card-content table-responsive">
-  
+
 
 
 <form>
@@ -21,7 +21,7 @@
     </select>
   </div>
   <div class="form-group">
-    <label >File:</label>
+    <label >Select File</label>
     <input type="file"  [attr.disabled]="block ? '' : null" (change)="upload($event)" accept=".pdf,.doc,.docx" />
   </div>
 </form>
