@@ -1,0 +1,39 @@
+<div class="main-content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12 ">
+          <div class="card">
+            <div class="card-header" data-background-color="red">
+                                    
+						<p>EXAM GRADES</p>
+            </div>
+           <div class="card-content">
+              <div class="card-content table-responsive">
+                 
+
+
+                <div *ngIf="resultsReady">
+                  <table class="table table-striped">
+                    <thead>
+                    <tr>
+                      <th scope="col">Module</th>
+                      <th scope="col">Result</th>
+                      <th scope="col">Semester</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let result of results">
+                      <td>{{result.module}}</td>
+                      <td>{{result.result}}</td>
+                      <td>Semi 3</td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

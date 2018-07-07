@@ -1,0 +1,42 @@
+<div class="main-content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12 ">
+          <div class="card">
+            <div class="card-header" data-background-color="red">
+                                    
+						<p>Register</p>
+            </div>
+           <div class="card-content">
+              <div class="card-content table-responsive">
+                 
+
+                  <form (submit)="onRegisterSubmit()">
+                    <div class="form-group">
+                      <label>Name</label>
+                      <input type="text" [(ngModel)]="name" name="name" class="form-control">
+                    </div>
+                    <div class="form-group">
+                      <label>StudentId/Username</label>
+                      <input type="text" [(ngModel)]="userName" name="userName" class="form-control" (change)="validateUserId()">
+                      <small *ngIf="!userIdValid" class="form-text text-danger">{{userIdMessage}}</small>
+                      <small *ngIf="userIdValid" class="form-text text-muted">{{userIdMessage}}</small>  
+                    </div>
+                    <div class="form-group">
+                      <label>Email</label>
+                      <input type="email" [(ngModel)]="email" name="email" class="form-control" (change)="validateEmail()">
+                      <small *ngIf="!emailValid" class="form-text text-danger">Invalid email</small>
+                    </div>
+                    <div class="form-group">
+                      <label>Password</label>
+                      <input type="password" [(ngModel)]="password" name="password" class="form-control">
+                    </div>
+                    <button type="submit" class="btn btn-danger">Submit</button>
+                  </form>
+                  </div>
+                </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>

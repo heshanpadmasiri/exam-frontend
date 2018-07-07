@@ -1,0 +1,37 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12 ">
+        <div class="card">
+          <div class="card-header" data-background-color="red">
+                                  
+          <p>Update Results</p>
+          </div>
+         <div class="card-content">
+            <div class="card-content table-responsive">
+
+              <form (ngSubmit)="onSubmit()">
+                <div class="form-group">
+                  <label for="moduleSelect">Select Module:</label>
+                  <select #select class="form-control" id="moduleSelect" (change)="onChange(select.value)">
+                    <option *ngFor="let module of adminModules" [value]="module">{{module}}</option>
+                  </select>
+                </div>
+                <div *ngFor="let student of registeredStudents;let i = index">
+                  <div class="form-group row">
+                    <label for="{{student}}" class="col-sm-2 col-form-label">{{registeredStudents[i]}}</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" id="{{student}}" [(ngModel)]="currentResult[i][registeredStudents[i]]"
+                            name="result{{i}}">
+                    </div>
+                  </div>
+                </div>
+                <input type="submit" class="btn btn-danger" value="Submit">
+              </form>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

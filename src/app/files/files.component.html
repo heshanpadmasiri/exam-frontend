@@ -1,0 +1,32 @@
+<div class="main-content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12 ">
+          <div class="card">
+            <div class="card-header" data-background-color="red">
+                                    
+            <p>Files</p>
+            </div>
+           <div class="card-content">
+              <div class="card-content table-responsive">
+  <form >
+  <div class="form-group">
+    <label for="moduleSelect">Select Module:</label>
+    <select #select class="form-control" id="moduleSelect" (change)="onChange(select.value)">
+      <option *ngFor="let module of modules" [value]="module">{{module}}</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label>Available files:</label>
+    <ul>
+      <li *ngFor="let file of fileList"> <a href="{{file.url}}">{{file.name}} </a></li>
+    </ul>
+  </div>
+</form>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>

@@ -1,0 +1,33 @@
+<div class="main-content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12 ">
+          <div class="card">
+            <div class="card-header" data-background-color="red">
+                                    
+						<p>Log In</p>
+            </div>
+           <div class="card-content">
+              <div class="card-content table-responsive">
+                 
+
+
+
+                <form (submit)="onLoginSubmit()">
+                  <div class="form-group">
+                    <label>Username:</label>
+                    <input type="text" class="form-control" [(ngModel)]="username" name="username">
+                  </div>
+                  <div class="form-group">
+                    <label>Password:</label>
+                    <input type="password" class="form-control" [(ngModel)]="password" name="password">
+                  </div>
+                  <input type="submit" class="btn btn-danger" value="Login">
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
