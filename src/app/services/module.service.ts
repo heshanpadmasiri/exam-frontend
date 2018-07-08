@@ -57,6 +57,14 @@ export class ModuleService {
     return this.http.get(this.moduleServiceEndpoint + 'file-list', {params: params}) as Observable<ModuleDataMessage>;
   }
 
+  deleteFile(moduleId: string, fileName: string) {
+    const params = {
+      moduleId: moduleId,
+      fileName: fileName
+    };
+    return this.http.post(this.moduleServiceEndpoint + 'delete-file', params) as Observable<SimpleMessage>;
+  }
+
 }
 
 interface ModuleDataMessage {

@@ -3,6 +3,7 @@ import {ModuleService} from '../services/module.service';
 import {UserServicesService} from '../services/user-services.service';
 import {AuthService} from '../services/auth.service';
 import {AngularFireStorage} from 'angularfire2/storage';
+import {FlashMessagesService} from 'angular2-flash-messages';
 
 @Component({
   selector: 'app-files',
@@ -19,7 +20,8 @@ export class FilesComponent implements OnInit {
     private moduleServices: ModuleService,
     private userService: UserServicesService,
     private authService: AuthService,
-    private firebaseStorage: AngularFireStorage
+    private firebaseStorage: AngularFireStorage,
+    private flashMessageService: FlashMessagesService
   ) {
     this.fileList = [];
   }
@@ -38,7 +40,6 @@ export class FilesComponent implements OnInit {
         }
       });
     } else {
-      // todo: get the list of all available modules
       this.moduleServices.getModuleList().subscribe(res => {
         if (res.success) {
           this.modules = res.msg;
@@ -60,6 +61,32 @@ export class FilesComponent implements OnInit {
        this.updateFileList(next.msg);
       }
     });
+  }
+
+  deleteFile(fileName: string) {
+    if (confirm(`Are you sure that you want to delete ${fileName}`)) {
+      this.firebaseStorage.ref(fileName).delete().subscribe(next => {
+
+      }, error1 => {
+
+      }, () => {
+        this.moduleServices.deleteFile(this.module, fileName).subscribe(res => {
+          if (res.success) {
+            this.flashMessageService.show(res.msg, {
+              cssClass: 'alert-success',
+              timeOut: 5000
+            });
+          } else {
+            console.log(res);
+            this.flashMessageService.show(res.msg, {
+              cssClass: 'alert-danger',
+              timeOut: 5000
+            });
+          }
+        });
+      });
+
+    }
   }
 
   updateFileList(nameList: any[]) {

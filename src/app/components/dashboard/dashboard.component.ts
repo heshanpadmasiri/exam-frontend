@@ -18,7 +18,7 @@ export class DashboardComponent implements OnInit {
   reCorrectionMessages: Message[];
   netGpaChange: number;
   netGpa: number;
-  gpaMap: Map;
+  gpaMap: Map<string, number>;
 
   constructor(private userService: UserServicesService , public auth: AuthService, private examResultsService: ExamResultsService) {
     this.moduleMessages = [];

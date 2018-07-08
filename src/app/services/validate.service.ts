@@ -21,20 +21,20 @@ export class ValidateService {
   }
 
   // use this to validate the pattern of userID
-  validateUserId(userId: string){
+  validateUserId(userId: string) {
     const re = /\d{6}[A-Z]/;
     return re.test(userId);
   }
 
   // use this to validate the pattern of a module Code
-  validateModuleCode(moduleCode: string){
+  validateModuleCode(moduleCode: string) {
     const re = /[A-Z][A-Z] \d{4}/;
     return re.test(moduleCode);
   }
 
   // use this to validate pattern for results
-  validateResults(result: string){
-    const re = /[A,B,C,D]\+?|IWE/;
+  validateResults(result: string) {
+    const re = /^([A-D]\+?|IWE)$/;
     return re.test(result);
   }
 

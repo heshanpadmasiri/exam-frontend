@@ -1,13 +1,11 @@
 import { Injectable } from '@angular/core';
 import {UserServicesService} from './user-services.service';
-import {Observable} from 'rxjs/Observable';
-import {observable} from 'rxjs/internal-compatibility';
 
 @Injectable()
 export class ExamResultsService {
 
   results: any;
-  gpaMap: Map;
+  gpaMap: Map<string, number>;
 
   constructor(private  userSevice: UserServicesService) {
     this.results = [
@@ -42,9 +40,7 @@ export class ExamResultsService {
      return this.results;
    }
 
-   getExamResultsForChart():Observable<any> {
 
-   }
 
    getNetGpaChange() {
      return 0.2;
