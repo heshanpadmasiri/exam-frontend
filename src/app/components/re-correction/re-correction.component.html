@@ -7,11 +7,11 @@
             <p> Tasks:</p>
             <i class="material-icons">compare_arrows</i> Recorrection
 					</div>
-          
+
 					<div class="card-content">
 						<div class="tab-content">
 							<div class="tab-pane active" id="recorrection">
-					
+
 								<form (ngSubmit)="onSubmit()">
 									<div class="row">
 									<div class="col-md-6">
@@ -26,9 +26,9 @@
 										<div class="form-group label-floating">
 											<label>Expected Result:</label>
 											<input type="text" class="form-control" [(ngModel)]="result" name="ModuleResult">
-											
+
                     </div>
-                    
+
 									</div>
                 </div>
                 <div class="row">
@@ -36,21 +36,22 @@
                         <div class="form-group label-floating">
                           <label>Why you deserved this:</label>
                           <input type="text" class="form-control" [(ngModel)]="reason" name="Reason">
-                          
+
                         </div>
-                        
+
                       </div>
                 </div>
-									<input type="submit" class="btn btn-danger" value="Submit">
+                  <input type="submit"  value="{{btnText}}" [attr.disabled]="block ? '' : null" class="btn btn-danger">
 								</form>
-											  
-					
-								
+
+
+
 							</div>
-																  
+
 						</div>
 					</div>
 				</div>
-		  
+
 	</div>
+</div>
 </div>
