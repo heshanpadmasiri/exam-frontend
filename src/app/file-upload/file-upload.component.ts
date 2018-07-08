@@ -45,12 +45,12 @@ export class FileUploadComponent implements OnInit {
 
   blockUpload() {
     this.block = true;
-    this.btnText = 'Wait';
+    this.btnText = 'Please Wait';
   }
 
   unBlockUpload() {
     this.block = false;
-    this.btnText = 'Upload';
+    this.btnText = 'Select File';
   }
 
   onChange(module: string) {
