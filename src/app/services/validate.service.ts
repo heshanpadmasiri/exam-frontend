@@ -28,7 +28,7 @@ export class ValidateService {
 
   // use this to validate the pattern of a module Code
   validateModuleCode(moduleCode: string) {
-    const re = /[A-Z][A-Z] \d{4}/;
+    const re = /[a-z][a-z]\d{4}/;
     return re.test(moduleCode);
   }
 

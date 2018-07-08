@@ -1,19 +1,21 @@
 <div class="main-content">
     <div class="container-fluid">
-  
+
         <div class=" col-md-12">
           <div class="card">
             <div class="card-header" data-background-color="red">
               <p> Register To Module:</p>
-              
+
             </div>
             <div class="card-content">
-                <div class="tab-content">  
+                <div class="tab-content">
 
                 <form (submit)="onRegistrationSubmit()">
                   <div class="form-group">
                     <label>Module Code:</label>
-                    <input type="text" class="form-control" [(ngModel)]="moduleCode" name="ModuleCode">
+                    <select #select class="form-control" id="moduleSelect" (change)="onChange(select.value)">
+                      <option *ngFor="let module of potentialModules" [value]="module">{{module}}</option>
+                    </select>
                   </div>
 
                   <input type="submit" class="btn btn-danger" value="{{btnText}}" [disabled]="block">

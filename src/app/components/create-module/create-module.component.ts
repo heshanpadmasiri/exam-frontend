@@ -38,7 +38,7 @@ export class CreateModuleComponent implements OnInit {
     if (!this.block) {
       this.block = true;
       this.btnText = 'Please Wait';
-      this.moduleId = this.moduleId.toUpperCase();
+      this.moduleId = this.moduleId.toLowerCase();
       if (this.validationService.validateModuleCode(this.moduleId)) {
         this.moduleService.createModule(this.moduleId, this.admin).subscribe(res => {
           if (res.success) {
