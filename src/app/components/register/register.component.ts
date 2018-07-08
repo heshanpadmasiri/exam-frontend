@@ -49,30 +49,35 @@ export class RegisterComponent implements OnInit {
 
     if (!this.validateService.validateEmail(user.email)) {
       this.flashMessagesService.show('Invalid email address', {cssClass: 'alert-danger', timeOut: 3000});
+      this.emailValid = false;
+      return false;
+    }
+    if (!this.userIdValid) {
+      this.flashMessagesService.show('Invalid userID', {cssClass: 'alert-danger', timeOut: 3000});
+      this.emailValid = false;
       return false;
     }
 
-    this.auth.registerUser(user).subscribe(data => {
-      if (data.success) {
-        this.flashMessagesService.show('Successfully registered', {cssClass: 'alert-success', timeOut: 3000});
-        this.router.navigate(['/login']);
-      } else {
-        this.flashMessagesService.show('Something went wrong', {cssClass: 'alert-danger', timeOut: 3000});
-        this.router.navigate(['/register']);
-      }
-    });
+    if (this.userIdValid && this.emailValid) {
+      this.auth.registerUser(user).subscribe(data => {
+        if (data.success) {
+          this.flashMessagesService.show('Successfully registered', {cssClass: 'alert-success', timeOut: 3000});
+          this.router.navigate(['/login']);
+        } else {
+          this.flashMessagesService.show('Something went wrong', {cssClass: 'alert-danger', timeOut: 3000});
+          this.router.navigate(['/register']);
+        }
+      });
+    }
   }
-
   validateEmail(){
     this.emailValid = this.validateService.validateEmail(this.email);
   }
 
    validateUserId(){
     if(this.validateService.validateUserId(this.userName)){
-      console.log(this.userName);
       this.userService.validateUserId(this.userName).subscribe(result => {
         if(result.success){
-          console.log(result);
           if(result.msg){
             this.userIdValid = true;
             this.userIdMessage = 'That userName is available';
