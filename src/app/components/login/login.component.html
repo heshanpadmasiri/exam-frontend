@@ -4,12 +4,12 @@
         <div class="col-md-12 ">
           <div class="card">
             <div class="card-header" data-background-color="red">
-                                    
+
 						<p>Log In</p>
             </div>
            <div class="card-content">
               <div class="card-content table-responsive">
-                 
+
 
 
 
@@ -22,7 +22,8 @@
                     <label>Password:</label>
                     <input type="password" class="form-control" [(ngModel)]="password" name="password">
                   </div>
-                  <input type="submit" class="btn btn-danger" value="Login">
+
+                  <input type="submit" class="btn btn-danger" value="{{btnText}}" [attr.disabled]="block ? '' : null">
                 </form>
               </div>
             </div>
