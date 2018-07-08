@@ -17,6 +17,8 @@ export class EnterResultsComponent implements OnInit {
   currentResult = [];
   registeredStudents = [];
   currentModule: string;
+  block: boolean;
+  btnText: string;
 
   constructor(private userService: UserServicesService,
               private moduleService: ModuleService,
@@ -25,17 +27,12 @@ export class EnterResultsComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.ubBlockSubmit();
     this.userService.getAdminModules().subscribe(message => {
       if (message.success) {
         this.adminModules = message.msg;
         if (this.adminModules.length > 0) {
-          this.currentModule = this.adminModules[0];
-          this.moduleData = this.moduleService.getModuleData(this.adminModules[0]).subscribe(next => {
-            if (next.success) {
-              this.moduleData = next.msg;
-              this.updateCurrentResult();
-            }
-          });
+          this.onChange(this.adminModules[0]);
         }
       }
     });
@@ -57,11 +54,20 @@ export class EnterResultsComponent implements OnInit {
         this.currentResult.push(result);
       });
     }
-    console.log(this.currentResult);
   }
 
   onSubmit() {
     this.pushResult();
+  }
+
+  blockSubmit() {
+    this.block = true;
+    this.btnText = 'Please wait';
+  }
+
+  ubBlockSubmit(){
+    this.block = false;
+    this.btnText = 'Submit';
   }
 
   onChange(moduleId: string) {
@@ -77,20 +83,22 @@ export class EnterResultsComponent implements OnInit {
 
   pushResult() {
     const finalResult = [];
-    let lock = true;
+    this.blockSubmit();
     for (let index = 0; index < this.registeredStudents.length; index++) {
       const result = this.currentResult[index][this.registeredStudents[index]].toUpperCase();
-      console.log(result);
-      console.log(this.validationService.validateResults(result));
       if (this.validationService.validateResults(result)) {
         finalResult.push({
           [this.registeredStudents[index]]: result
         });
       } else {
-        lock = false;
+        this.ubBlockSubmit();
+        this.flashMessageService.show('Check Results', {
+          cssClass: 'alert-danger',
+          timeOut: 5000
+        });
       }
     }
-    if(lock){
+    if (this.block) {
       this.moduleService.updateResults(this.currentModule, finalResult).subscribe(next => {
         if (next.success) {
           this.flashMessageService.show('Result update successful', {
@@ -103,12 +111,14 @@ export class EnterResultsComponent implements OnInit {
             timeOut: 5000
           });
         }
+        this.ubBlockSubmit();
       });
     } else {
       this.flashMessageService.show('Results invalid', {
         cssClass: 'alert-danger',
         timeOut: 5000
       });
+      this.ubBlockSubmit();
     }
 
   }

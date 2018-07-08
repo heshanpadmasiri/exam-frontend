@@ -4,7 +4,7 @@
       <div class="col-md-12 ">
         <div class="card">
           <div class="card-header" data-background-color="red">
-                                  
+
           <p>Update Results</p>
           </div>
          <div class="card-content">
@@ -22,11 +22,12 @@
                     <label for="{{student}}" class="col-sm-2 col-form-label">{{registeredStudents[i]}}</label>
                     <div class="col-sm-10">
                       <input type="text" class="form-control" id="{{student}}" [(ngModel)]="currentResult[i][registeredStudents[i]]"
-                            name="result{{i}}">
+                             name="result{{i}}">
                     </div>
                   </div>
                 </div>
-                <input type="submit" class="btn btn-danger" value="Submit">
+
+                <input type="submit"  value="{{btnText}}" [attr.disabled]="block ? '' : null" class="btn btn-danger">
               </form>
               </div>
           </div>
