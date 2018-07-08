@@ -1,52 +1,56 @@
 import { Injectable } from '@angular/core';
+import {UserServicesService} from './user-services.service';
+import {Observable} from 'rxjs/Observable';
+import {observable} from 'rxjs/internal-compatibility';
 
 @Injectable()
 export class ExamResultsService {
 
-  results:any;
+  results: any;
+  gpaMap: Map;
 
-  constructor() {
+  constructor(private  userSevice: UserServicesService) {
     this.results = [
       {
-        module:"CS 2150",
-        result:"A",
-        gpa:3.7
+        module: 'CS 2150',
+        result: 'A',
+        gpa: 3.7
       },
       {
-        module:"CS 2151",
-        result:"B",
-        gpa:3.0
+        module: 'CS 2151',
+        result: 'B',
+        gpa: 3.0
       },
       {
-        module:"CS 2152",
-        result:"A+",
-        gpa:4.2
+        module: 'CS 2152',
+        result: 'A+',
+        gpa: 4.2
       }
-    ]
+    ];
+    this.gpaMap = new Map();
+    this.gpaMap.set('A+', 4.2);
+    this.gpaMap.set('A', 4);
+    this.gpaMap.set('B+', 3.5);
+    this.gpaMap.set('B', 3);
+    this.gpaMap.set('C+', 2.5);
+    this.gpaMap.set('D+', 2);
+    this.gpaMap.set('D', 1.0);
+    this.gpaMap.set('F', 0);
    }
 
-   getExamResults(){
+   getExamResults() {
      return this.results;
    }
 
-   getExamResultsForChart(){
-     let modules = new Array<String>();
-     let gpas = new Array<number>();
-     for (const each of this.results) {
-       modules.push(each.module);
-       gpas.push(each.gpa);
-     }
-     return {
-       modules:modules,
-       gpas:gpas
-     }
+   getExamResultsForChart():Observable<any> {
+
    }
 
-   getNetGpaChange(){
+   getNetGpaChange() {
      return 0.2;
    }
 
-   getNetGpa(){
+   getNetGpa() {
      return 3.5;
    }
 

@@ -4,6 +4,7 @@ import {UserServicesService} from '../../services/user-services.service';
 import {ExamResultsService} from '../../services/exam-results.service';
 import {AuthService} from '../../services/auth.service';
 import * as Chartist from 'chartist';
+import {Observable} from 'rxjs/Observable';
 
 @Component({
   selector: 'app-dashboard',
@@ -17,11 +18,22 @@ export class DashboardComponent implements OnInit {
   reCorrectionMessages: Message[];
   netGpaChange: number;
   netGpa: number;
+  gpaMap: Map;
+
   constructor(private userService: UserServicesService , public auth: AuthService, private examResultsService: ExamResultsService) {
     this.moduleMessages = [];
     this.reCorrectionMessages = [];
+    this.gpaMap = new Map();
+    this.gpaMap.set('A+', 4.2);
+    this.gpaMap.set('A', 4);
+    this.gpaMap.set('B+', 3.5);
+    this.gpaMap.set('B', 3);
+    this.gpaMap.set('C+', 2.5);
+    this.gpaMap.set('D+', 2);
+    this.gpaMap.set('D', 1.0);
+    this.gpaMap.set('F', 0);
     this.netGpaChange = this.examResultsService.getNetGpaChange();
-    this.netGpa = this.examResultsService.getNetGpa();
+    this.netGpa = 0;
   }
 
 
@@ -90,27 +102,39 @@ startAnimationForBarChart(chart) {
         this.addToMessageArrays(this.messages);
       }
     });
-    const examResults = this.examResultsService.getExamResultsForChart();
-      const examResultsChart: any = {
-          labels: examResults.modules,
+    this.userService.getOverallResults().subscribe(res => {
+      if (res.success) {
+        const modules = [];
+        const gpas = [];
+        for (const each of res.msg) {
+          modules.push(each.module);
+          gpas.push(this.gpaMap.get(each.result));
+          this.netGpa += this.gpaMap.get(each.result);
+        }
+        const examResultsChart: any = {
+          labels: modules,
           series: [
-              examResults.gpas
+            gpas
           ]
-      };
-
-     const optionsExamResultsChart: any = {
-          lineSmooth: Chartist.Interpolation.cardinal({
+        };
+        if (this.auth.isStudent()) {
+          const optionsExamResultsChart: any = {
+            lineSmooth: Chartist.Interpolation.cardinal({
               tension: 0
-          }),
-          low: 0,
-          high: 4.5,
-          chartPadding: { top: 0, right: 0, bottom: 0, left: 0},
-      };
-      if (this.auth.isStudent()) {
-      let dailySalesChart = new Chartist.Line('#examResultsChart', examResultsChart, optionsExamResultsChart);
+            }),
+            low: 0,
+            high: 4.5,
+            chartPadding: { top: 0, right: 0, bottom: 0, left: 0},
+          };
+          const examResultChart = new Chartist.Line('#examResultsChart', examResultsChart, optionsExamResultsChart);
 
-      this.startAnimationForLineChart(dailySalesChart);
+          this.startAnimationForLineChart(examResultChart);
+        }
       }
+    });
+
+
+
 
   }
 
